@@ -34,7 +34,7 @@
                         </Row>
                         <Modal
                             v-model="backSchoolModal"
-                            title="激活新班级"
+                            title="复学班级"
                             @on-ok="backSchoolOK">
                             <p>
                                 <Row class="margin-top-10">

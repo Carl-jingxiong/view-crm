@@ -489,6 +489,10 @@ export default {
                 if(response.data.result==true){
                     console.log(response.data)
                     this.successYN(true);
+                    //YN表提交成功后跳转
+                    this.$router.push({
+                        name: 'daily'
+                    });
                 }else{
                     
                 }

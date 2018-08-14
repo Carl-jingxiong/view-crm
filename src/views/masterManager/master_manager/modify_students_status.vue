@@ -33,7 +33,7 @@
                         </Row>
                         <Modal
                             v-model="retardModal"
-                            title="激活新班级"
+                            title="留级班级"
                             @on-ok="retardationOK">
                             <p>
                                 <Row class="margin-top-10">
