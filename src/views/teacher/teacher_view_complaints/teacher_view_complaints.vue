@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        查看投诉(冯老师)
+        查看投诉(讲师)
         <Row class="margin-top-15">
             <Col span="24" >
                 <Card >
@@ -39,10 +39,10 @@ import tableData from '../../tables/components/table_data.js';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { Modal } from 'iview';
-import sugges_expandRow from './component/feng_sugges_expandRow';
+import sugges_expandRow from './component/sugges_expandRow';
 
-export default {
-    name: 'feng_view_complaints_index',
+export default { 
+    name: 'teacher_view_complaints_index',
     components:{
         canEditTable,
         sugges_expandRow

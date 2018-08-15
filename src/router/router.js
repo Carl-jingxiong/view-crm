@@ -384,19 +384,19 @@ const teacherRouter=[
         ]
     },
     {
-        path: '/view_complaints',
+        path: '/teacher_view_complaints',
         icon: 'sad-outline',
-        name: 'view_complaints',
+        name: 'teacher_view_complaints',
         access:4,
         title: '查看投诉',
         component: Main,
         children: [
             { 
-                path: 'view_complaints',
-                name: 'view_complaints_index',
+                path: 'teacher_view_complaints_index',
+                name: 'teacher_view_complaints_index',
                 icon:'sad-outline',
                 title: '查看投诉',
-                component: () => import('@/views/teacher/view_complaints/view_complaints.vue')
+                component: () => import('@/views/teacher/teacher_view_complaints/teacher_view_complaints.vue')
             }
         ]
     }
