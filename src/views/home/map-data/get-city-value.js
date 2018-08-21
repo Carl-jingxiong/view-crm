@@ -21,5 +21,6 @@ export default [
     {name: '云浮', value: 78},
     {name: '梅州', value: 23},
     {name: '文登', value: 78},
-    {name: '上海', value: 218}
+    {name: '上海', value: 218},
+    {name: '海口', value: 50},
 ];

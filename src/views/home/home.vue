@@ -66,7 +66,7 @@
                     </Col>
                 </Row>
             </Col>
-            <!-- <Col :md="24" :lg="16">
+            <Col :md="24" :lg="16">
                 <Row :gutter="5">
                     <Col :xs="24" :sm="12" :md="6" :style="{marginBottom: '10px'}">
                         <infor-card
@@ -110,7 +110,7 @@
                     <Card :padding="0">
                         <p slot="title" class="card-title">
                             <Icon type="map"></Icon>
-                            今日服务调用地理分布
+                            今日服务调用地理分布地理分布
                         </p>
                         <div class="map-con">
                             <Col span="10">
@@ -124,9 +124,9 @@
                         </div>
                     </Card>
                 </Row>
-            </Col> -->
+            </Col>
         </Row>
-        <!-- <Row :gutter="10" class="margin-top-10">
+        <Row :gutter="10" class="margin-top-10">
             <Col :md="24" :lg="8" :style="{marginBottom: '10px'}">
                 <Card>
                     <p slot="title" class="card-title">
@@ -160,8 +160,8 @@
                     </div>
                 </Card>
             </Col>
-        </Row> -->
-        <!-- <Row class="margin-top-10">
+        </Row>
+        <Row class="margin-top-10">
             <Card>
                 <p slot="title" class="card-title">
                     <Icon type="ios-shuffle-strong"></Icon>
@@ -171,7 +171,7 @@
                     <service-requests></service-requests>
                 </div>
             </Card>
-        </Row> -->
+        </Row>
     </div>
 </template>
 

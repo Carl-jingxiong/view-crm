@@ -53,7 +53,7 @@ export const locking = {
 // 作为Main组件的子页面展示但是不在左侧菜单显示的路由写在otherRouter里
 export const otherRouter = {
     path: '/',
-    name: 'otherRouter',
+    name: 'otherRouter', 
     redirect: '/home',
     component: Main,
     children: [
@@ -203,6 +203,13 @@ const harryRouter=[
                 component: () => import('@/views/harry/manage/manage_center.vue')
             },
             {
+                path: 'manage_teaching_manager',
+                name: 'manage_teaching_manager',
+                icon:'person-add',
+                title: '教学经理管理',
+                component: () => import('@/views/harry/manage/manage_teaching_manager.vue')
+            },
+            {
                 path: 'manage_students',
                 name: 'manage_students',
                 icon:'android-contacts',
@@ -267,6 +274,31 @@ const harryRouter=[
         ]
     },
     {
+        path: '/complaints',
+        icon: 'sad-outline',
+        name: 'complaints',
+        access:2,
+        title: '学生反馈',
+        component: Main,
+        children: [
+            {
+                path: '/complaints',
+                name: 'complaints_index',
+                icon:'android-sad',
+                title: '查看反馈',
+                component: () => import('@/views/harry/complaints/complaints.vue')
+            },
+            { 
+                path: 'download_complaints', 
+                title: '下载已完成学生反馈', 
+                icon: 'code-download',
+                name: 'download_complaints_index', 
+                component: () => import('@/views/harry/complaints/component/download_complaints.vue')
+                //用于品保主管下载所有的学生的反馈信息
+            },
+        ]
+    },
+    {
         path: '/harrydaily',
         icon: 'android-clipboard',
         name: 'harrydaily',
@@ -280,23 +312,6 @@ const harryRouter=[
                 icon:'funnel',
                 title: '查看日报',
                 component: () => import('@/views/harry/daily/daily.vue')
-            }
-        ]
-    },
-    {
-        path: '/complaints',
-        icon: 'sad-outline',
-        name: 'complaints',
-        access:2,
-        title: '投诉',
-        component: Main,
-        children: [
-            {
-                path: '/complaints',
-                name: 'complaints_index',
-                icon:'android-sad',
-                title: '查看投诉',
-                component: () => import('@/views/harry/complaints/complaints.vue')
             }
         ]
     },

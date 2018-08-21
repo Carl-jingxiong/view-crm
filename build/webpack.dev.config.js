@@ -24,7 +24,7 @@ const devServer = {
     proxy: {
       '/api': {
         // target: 'http://172.164.1.68:8000/',
-        target: 'http://172.164.1.68:8000/',
+        target: 'http://172.40.70.165:8000/',
         changeOrigin: true,
         pathRewrite: {
           '^/api': '/'

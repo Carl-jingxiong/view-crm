@@ -26,7 +26,7 @@
                         </Col>
                     </Row>
                     <!-- 建议详情展示表格 -->
-                    <Table  class="margin-top-10" :columns="suggestionHead" :data="suggestionData"></Table>
+                    <Table  style="margin-top:10px;" :columns="suggestionHead" :data="suggestionData"></Table>
                 </Card> 
             </Col>
         </Row>
@@ -91,18 +91,18 @@ export default {
                 }
             ],
             suggestionData: [
-                {
-                    stuid: '学生姓名',
-                    teacher: '讲师名称',
-                    coclassifyd:'反馈类型',
-                    codate:'日期',
-                    cotime: '时间',
-                    tel:'12345678879',
+                // {
+                //     stuid: '学生姓名',
+                //     teacher: '讲师名称',
+                //     coclassifyd:'反馈类型',
+                //     codate:'日期',
+                //     cotime: '时间',
+                //     tel:'12345678879',
 
-                    classes:"AID",
-                    scheduled: '反馈进度',
-                    detail:'反馈内容详情'
-                }
+                //     classes:"AID",
+                //     scheduled: '反馈进度',
+                //     detail:'反馈内容详情'
+                // }
             ],
             typelist:[
                 {id:1,typename:'建议'},
