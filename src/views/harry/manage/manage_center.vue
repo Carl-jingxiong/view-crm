@@ -1,6 +1,7 @@
 <style lang="less">
     @import '../../../styles/common.less';
     @import '../../tables/components/table.less';
+        @import '../../my-components/area-linkage/area-linkage.less';
 </style>
 
 <template>
@@ -31,6 +32,19 @@
                                     </Col>
                                     <Col span="20">
                                         <i-input v-model="centerName" placeholder="请输入中心名称"></i-input>
+                                    </Col>
+                                </Row>
+                                <Row class="margin-top-10">
+                                    <Col span="4">
+                                        选择地域:
+                                    </Col>
+                                    <Col span="20">
+                                        <Row class="area-linkage-page-row2">
+                                            <al-selector 
+                                                v-model="searchvalue"
+                                                searchable
+                                            />
+                                        </Row>
                                     </Col>
                                 </Row>
                                 <Row  class="margin-top-10">
@@ -83,25 +97,30 @@ import tableData from '../../tables/components/table_data.js';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { Modal } from 'iview';
+import alSelector from '../../my-components/area-linkage/components/al-selector';
+import alCascader from '../../my-components/area-linkage/components/al-cascader';
 
 export default {
     name: 'manage_center',
     components: {
-        canEditTable
+        canEditTable,
+        alSelector,
+        alCascader
     },
     data () {
         return {
+            searchvalue:[],
             centerHead:[
                 {
                     title: '序号',
                     type: 'index',
-                    width: 80,
+                    width: 60,
                     align: 'center'
                 },
                 {
                     title: '列表号',
                     key: 'id',
-                    width: 80,
+                    width: 60,
                     align: 'center'
                 },
                 {
@@ -112,24 +131,31 @@ export default {
                     editable: true
                 },
                 {
+                    title: '地域信息',
+                    align: 'center',
+                    key: 'local',
+                    // width: 150,
+                    // editable: true
+                },
+                {
                     title: '中心地址',
                     align: 'center',
                     key: 'ads',
-                    // width: 280,
+                    width: 220,
                     editable: true
                 },
                 {
                     title: '电话',
                     align: 'center',
                     key: 'tel',
-                    width: 160,
+                    width: 140,
                     editable: true
                 },
                 {
                     title: '中心主任',
                     align: 'center',
                     key: 'leader',
-                    width: 150,
+                    width: 100,
                     editable: true
                 },
                 {
@@ -169,10 +195,17 @@ export default {
             centerName:'',
             centerAds:'',
             centerTel:'',
-            centerLeader:''
+            centerLeader:'',
+            provice:'',
+            city:'',
+            area:'',
+            street:''
         };
     },
     methods: {
+        renderFormat (label) {
+            return label.join(' => ');
+        },
         getData () {
             // 获取中心列表
             axios.get(
@@ -230,6 +263,11 @@ export default {
             param.append("ads",this.centerAds);
             param.append("leader",this.centerLeader);
             param.append("tel",this.centerTel);
+            param.append("province",this.province);
+            param.append("city",this.city);
+            param.append("area",this.area);
+            param.append("street",this.street);
+            
             axios.post(
                 'userinfo/center',param,
                 {headers:{'Authorization':'JWT  '+Cookies.get('retoken')}}
@@ -257,6 +295,19 @@ export default {
                 }
             }
             this.$Modal.info(config)
+        }
+    },
+    watch: {
+        searchvalue (val) {
+            this.searchvalue = val;
+            // provice  city  area  street
+            if(val.length==4){
+                this.province=val[0]["code"];
+                this.city=val[1]["code"];
+                this.area=val[2]["code"];
+                this.street=val[3]["code"];
+            }
+            
         }
     },
     created () {

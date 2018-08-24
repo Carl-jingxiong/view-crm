@@ -104,8 +104,7 @@ export default {
                     data[i].daily_id=resData[i].id;
                     data[i].projectManager=resData[i].proman;
                 }
-                this.dailyListData=data;
-                
+                this.dailyListData=data.reverse();
             }).catch((err)=>{console.log(err)})
     }
 }
