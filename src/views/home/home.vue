@@ -18,7 +18,7 @@
                                 <Col span="16" style="padding-left:6px;">
                                     <Row class-name="made-child-con-middle" type="flex" align="middle">
                                         <div>
-                                            <b class="card-user-infor-name">Admin</b>
+                                            <b class="card-user-infor-name">{{username}}</b>
                                             <p>super admin</p>
                                         </div>
                                     </Row>
@@ -27,7 +27,7 @@
                             <div class="line-gray"></div>
                             <Row class="margin-top-8">
                                 <Col span="8"><p class="notwrap">上次登录时间:</p></Col>
-                                <Col span="16" class="padding-left-8">2017.09.12-13:32:20</Col>
+                                <Col span="16" class="padding-left-8">{{lastlogin}}</Col>
                             </Row>
                             <Row class="margin-top-8">
                                 <Col span="8"><p class="notwrap">上次登录地点:</p></Col>
@@ -71,10 +71,10 @@
                     <Col :xs="24" :sm="12" :md="6" :style="{marginBottom: '10px'}">
                         <infor-card
                             id-name="user_created_count"
-                            :end-val="count.createUser"
-                            iconType="android-person-add"
+                            :end-val="count.stucount"
+                            iconType="android-people" 
                             color="#2d8cf0"
-                            intro-text="今日新增用户"
+                            intro-text="Python学员总数"
                         ></infor-card>
                     </Col>
                     <Col :xs="24" :sm="12" :md="6" :style="{marginBottom: '10px'}">
@@ -99,10 +99,10 @@
                     <Col :xs="24" :sm="12" :md="6" :style="{marginBottom: '10px'}">
                         <infor-card
                             id-name="transfer_count"
-                            :end-val="count.transfer"
-                            iconType="shuffle"
+                            :end-val="count.stock"
+                            iconType="arrow-graph-up-right"
                             color="#f25e43"
-                            intro-text="今日服务调用量"
+                            intro-text="今日股价"
                         ></infor-card>
                     </Col>
                 </Row>
@@ -117,8 +117,8 @@
                                 <map-data-table :cityData="cityData" height="281" :style-obj="{margin: '12px 0 0 11px'}"></map-data-table>
                             </Col>
                             <Col span="14" class="map-incon">
-                                <Row type="flex" justify="center" align="middle">
-                                    <home-map :city-data="cityData"></home-map>
+                                <Row type="flex" justify="center" align="middle" class="the-map">
+                                    <home-map v-if="cityData.length" :city-data="cityData"></home-map>
                                 </Row>
                             </Col>
                         </div>
@@ -176,7 +176,9 @@
 </template>
 
 <script>
-import cityData from './map-data/get-city-value.js';
+import Cookies from 'js-cookie';
+import axios from 'axios';
+// import cityData from './map-data/get-city-value.js';
 import homeMap from './components/map.vue';
 import dataSourcePie from './components/dataSourcePie.vue';
 import visiteVolume from './components/visiteVolume.vue';
@@ -186,7 +188,8 @@ import countUp from './components/countUp.vue';
 import inforCard from './components/inforCard.vue';
 import mapDataTable from './components/mapDataTable.vue';
 import toDoListItem from './components/toDoListItem.vue';
-import Cookies from 'js-cookie';
+let $ = require('jquery');
+
 
 export default {
     name: 'home',
@@ -224,11 +227,16 @@ export default {
                 createUser: 496,
                 visit: 3264,
                 collection: 24389305,
-                transfer: 39503498
+                transfer: 39503498,
+                stock:'',
+                stucount:'',
             },
-            cityData: cityData,
+            // cityData: cityData,
+            cityData:[],
             showAddNewTodo: false,
-            newToDoItemValue: ''
+            newToDoItemValue: '',
+            username:'',
+            lastlogin:'',
         };
     },
     computed: {
@@ -257,6 +265,22 @@ export default {
             this.showAddNewTodo = false;
             this.newToDoItemValue = '';
         }
+    },
+    created(){
+        axios.get(
+            'analysis/indexanalysis',
+            {headers:{'Authorization':'JWT  '+Cookies.get('retoken')}}
+        ).then((response)=>{
+            console.log(response.data.data);
+            let data=response.data.data;
+            this.cityData=JSON.parse(data.citys);
+            this.lastlogin=data.lastlogin;
+            this.username=data.username;
+            this.count.stock=data.stock;
+            this.count.stucount=data.stucount;
+            console.log(JSON.parse(data.citys))
+        })
     }
+
 };
 </script>
