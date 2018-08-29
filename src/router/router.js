@@ -66,6 +66,7 @@ export const otherRouter = {
         { path: 'class_student_detail', title: '学生详情', name: 'class_student_detail', component: () => import('@/views/masterManager/master_manager/class_students_detail.vue') },//用于显示班级学生的详情
         { path: 'modify_students_message', title: '修改基础信息', name: 'modify_students_message', component: () => import('@/views/masterManager/master_manager/modify_students_message.vue') },//用于修改学生基础信息
         { path: 'modify_students_status', title: '修改学籍信息', name: 'modify_students_status', component: () => import('@/views/masterManager/master_manager/modify_students_status.vue') },//用于修改学生学籍信息
+        { path: 'modify_students_employment', title: '完善就业信息', name: 'modify_students_employment', component: () => import('@/views/masterManager/master_manager/modify_students_employment.vue') },//用于完善学生就业信息
     ]
 };
 

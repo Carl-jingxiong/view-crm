@@ -122,6 +122,28 @@ export default {
                             }
                         }, '修改学籍信息');
                     }
+                },
+                {
+                    title: '完善就业信息',
+                    key: 'show_more',
+                    align: 'center',
+                    render: (h, params) => {
+                        return h('Button', {
+                            props: {
+                                type: 'primary',
+                                size: 'small'
+                            },
+                            on: {
+                                click: () => {
+                                    let query = {class_id: params.row.class_id};
+                                    this.$router.push({
+                                        name: 'modify_students_employment',
+                                        query: query
+                                    });
+                                }
+                            }
+                        }, '完善就业信息');
+                    }
                 }
             ],
             //班级列表信息

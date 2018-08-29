@@ -69,8 +69,9 @@
             <Col :md="24" :lg="16">
                 <Row :gutter="5">
                     <Col :xs="24" :sm="12" :md="6" :style="{marginBottom: '10px'}">
+                        <!-- id-name="user_created_count" -->
                         <infor-card
-                            id-name="user_created_count"
+                            id-name="user_stucount"
                             :end-val="count.stucount"
                             iconType="android-people" 
                             color="#2d8cf0"
@@ -99,7 +100,7 @@
                     <Col :xs="24" :sm="12" :md="6" :style="{marginBottom: '10px'}">
                         <infor-card
                             id-name="transfer_count"
-                            :end-val="count.stock"
+                            :end-val="count.stock" 
                             iconType="arrow-graph-up-right"
                             color="#f25e43"
                             intro-text="今日股价"
@@ -131,10 +132,10 @@
                 <Card>
                     <p slot="title" class="card-title">
                         <Icon type="android-map"></Icon>
-                        上周每日来访量统计
+                        各方向平均薪资
                     </p>
                     <div class="data-source-row">
-                        <visite-volume></visite-volume>
+                        <visite-volume style="width:1000px;"></visite-volume>
                     </div>
                 </Card>
             </Col>
@@ -142,7 +143,7 @@
                 <Card>
                     <p slot="title" class="card-title">
                         <Icon type="ios-pulse-strong"></Icon>
-                        数据来源统计
+                        就业方向占比
                     </p>
                     <div class="data-source-row">
                         <data-source-pie></data-source-pie>
@@ -228,8 +229,8 @@ export default {
                 visit: 3264,
                 collection: 24389305,
                 transfer: 39503498,
-                stock:'',
-                stucount:'',
+                stock:0,
+                stucount:0,
             },
             // cityData: cityData,
             cityData:[],
@@ -237,6 +238,7 @@ export default {
             newToDoItemValue: '',
             username:'',
             lastlogin:'',
+            sleep:0
         };
     },
     computed: {
@@ -276,10 +278,14 @@ export default {
             this.cityData=JSON.parse(data.citys);
             this.lastlogin=data.lastlogin;
             this.username=data.username;
-            this.count.stock=data.stock;
+            this.count.stock = parseFloat(data.stock);
+            // console.log(data.stock.split(".")[1])
+            // this.stock = parseFloat(data.stock);
             this.count.stucount=data.stucount;
-            console.log(JSON.parse(data.citys))
         })
+        setTimeout(()=>{
+            this.sleep=2;
+        },2000)
     }
 
 };

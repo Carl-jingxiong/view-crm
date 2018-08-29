@@ -11,7 +11,11 @@ import CountUp from 'countup';
 function transformValue (val) {
     let endVal = 0;
     let unit = '';
-    if (val < 1000) {
+    if(val < 15){
+        let value=String(val);
+        endVal=parseInt(value.split(".")[0]);
+        unit="."+String(value.split(".")[1]);
+    } else if (val < 1000) {
         endVal = val;
     } else if (val >= 1000 && val < 1000000) {
         endVal = parseInt(val / 1000);
