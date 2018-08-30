@@ -81,11 +81,11 @@
                     <Col :xs="24" :sm="12" :md="6" :style="{marginBottom: '10px'}">
                         <infor-card
                             id-name="visit_count"
-                            :end-val="count.visit"
+                            :end-val="count.average"
                             iconType="ios-eye"
                             color="#64d572"
                             :iconSize="50"
-                            intro-text="今日浏览量"
+                            intro-text="学员平均薪资"
                         ></infor-card>
                     </Col>
                     <Col :xs="24" :sm="12" :md="6" :style="{marginBottom: '10px'}">
@@ -135,7 +135,7 @@
                         各方向平均薪资
                     </p>
                     <div class="data-source-row">
-                        <visite-volume style="width:1000px;"></visite-volume>
+                        <visite-volume></visite-volume>
                     </div>
                 </Card>
             </Col>
@@ -231,8 +231,8 @@ export default {
                 transfer: 39503498,
                 stock:0,
                 stucount:0,
+                average:0,
             },
-            // cityData: cityData,
             cityData:[],
             showAddNewTodo: false,
             newToDoItemValue: '',
@@ -279,13 +279,17 @@ export default {
             this.lastlogin=data.lastlogin;
             this.username=data.username;
             this.count.stock = parseFloat(data.stock);
-            // console.log(data.stock.split(".")[1])
-            // this.stock = parseFloat(data.stock);
             this.count.stucount=data.stucount;
+            this.count.average=data.average;
         })
-        setTimeout(()=>{
-            this.sleep=2;
-        },2000)
+        // .catch((error)=>{
+        //     console.log(error.response.status)
+        //     if(error.response.status==500){
+        //         this.count.stock = 0;
+        //         this.count.stucount= 0;
+        //         this.count.average= 0;
+        //     }
+        // })
     }
 
 };
