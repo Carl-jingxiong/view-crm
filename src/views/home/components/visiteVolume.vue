@@ -60,7 +60,7 @@ export default {
                     },
                     series: [
                         {
-                            name: '访问量',
+                            name: '平均薪资',
                             type: 'bar',
                             data: [
                                 {value: 453682, name: 'Mon', itemStyle: {normal: {color: '#2d8cf0'}}},

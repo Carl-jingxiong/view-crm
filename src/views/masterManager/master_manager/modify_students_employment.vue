@@ -6,7 +6,7 @@
 
 <template>
     <div>
-        完善就业信息(班主任)
+        <!-- 完善就业信息(班主任) -->
         <Row class="margin-top-15">
             <Col span="24" >
                 <Card >
@@ -208,27 +208,21 @@ export default {
                 this.studentData=response.data.data;
                 let resData=response.data.data;
                 let data=[];
-                console.log(resData)
+                // console.log(resData)
                 
                 for(var i=0;i<resData.length;i++){
-                    if(resData[i].employ==true){
-                        // console.log(resData[i].employ);
-                        return
-                    }else{
-                        data[i]={};
-                        data[i].name=resData[i].sname;
-                        data[i].id=resData[i].id;
-                    }
+                    // console.log(resData[i].employ);
+                    data[i]={};
+                    data[i].name=resData[i].sname;
+                    data[i].id=resData[i].id;
                 }
-                console.log(data)
+                // console.log(data)
                 this.studentList=data;
-
-                
             })
         },
         handleDel (val,index) {
             // this.$Message.success('删除了第' + (index + 1) + '行数据');
-            console.log(this.studentData[index].id)
+            // console.log(this.studentData[index].id)
             axios.delete(
                 'student/stuedit',
                 {
@@ -280,7 +274,6 @@ export default {
             this.studentid=val;
         },
         directionChange(val){
-            console.log(val)
             this.direction=val;
         }
         //录入学生信息方法结束

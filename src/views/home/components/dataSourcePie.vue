@@ -41,7 +41,7 @@ export default {
                     },
                     series: [
                         {
-                            name: '访问来源',
+                            name: '就业人数',
                             type: 'pie',
                             radius: '66%',
                             center: ['50%', '60%'],

@@ -18,17 +18,23 @@
 
 <template>
     <div class="container">
-        管理班级(教学经理页面)
+        <!-- 管理班级(教学经理页面) -->
         <Row class="margin-top-15">
             <Col span="24" >
                 <Card >
-                    <p slot="title" >
+                    <p slot="title"  style="height:33px">
                         <Row class="height-200px">
                             <Col span="21">
                                 <Icon type="pinpoint"></Icon>
                                 管理班级
                             </Col>
+                            <Col span="3">
+                                <i-button type="primary" @click="addClass">
+                                    添加远程班级
+                                </i-button>
+                            </Col>
                         </Row>
+                        <!-- 激活班级弹框 -->
                         <Modal
                             v-model="actClassModal"
                             title="激活新班级"
@@ -54,13 +60,74 @@
                                     <Col span="20">
                                         <Select 
                                         @on-change="masterChange" 
-                                        :model.sync="masterid"
+                                        :model.sync="masterid" 
                                         style="width:130px">
                                             <Option :key="index" v-for="(item,index) in masterList" :value="item.id">{{item.username}}</Option>
                                         </Select>
                                     </Col>
                                 </Row>
                             </p>
+                        </Modal>
+                        <!-- 添加远程班弹框 -->
+                        <Modal
+                            v-model="addClassModal"
+                            title="添加远程班" 
+                            @on-ok="addClass_ok">
+                                <p>
+                                    <Row class="margin-top-10">
+                                        <Col span="4">
+                                            选择主讲班：
+                                        </Col>
+                                        <Col span="8">
+                                            <Select 
+                                            @on-change="remotelyClassChange" 
+                                            :model.sync="remotelyClassid"
+                                            style="width:130px">
+                                                <Option :key="index" v-for="(item,index) in classData" :value="item.id">{{item.classno}}</Option>
+                                            </Select>
+                                        </Col>
+                                        <Col><span style="display:inline-block;padding-top:6px;">{{backClassno}}</span></Col>
+                                    </Row>
+                                    <!-- <Row class="margin-top-10">
+                                        <Col span="4">
+                                            远程班后缀：
+                                        </Col>
+                                        <Col span="20">
+                                            <Select 
+                                            @on-change="remotelyClassChange" 
+                                            :model.sync="remotelyClassid"
+                                            style="width:130px">
+                                                <Option :key="index" v-for="(item,index) in classData" :value="item.id">{{item.classno}}</Option>
+                                            </Select>
+                                        </Col>
+                                    </Row> -->
+                                    <!-- <Row class="margin-top-10">
+                                        <Col span="4">
+                                            项目经理：
+                                        </Col>
+                                        <Col span="20">
+                                            <Select 
+                                            @on-change="managerChange" 
+                                            :model.sync="managerid"
+                                            style="width:130px">
+                                                <Option :key="index" v-for="(item,index) in managerList" :value="item.id">{{item.username}}</Option>
+                                            </Select>
+                                        </Col>
+                                    </Row>
+                                    <Row class="margin-top-10">
+                                        <Col span="4">
+                                            班主任：
+                                        </Col>
+                                        <Col span="20">
+                                            <Select 
+                                            @on-change="masterChange" 
+                                            :model.sync="masterid" 
+                                            style="width:130px">
+                                                <Option :key="index" v-for="(item,index) in masterList" :value="item.id">{{item.username}}</Option>
+                                            </Select>
+                                        </Col>
+                                    </Row> -->
+                                </p>
                         </Modal>
                     </p>
                     <table class="classes-message-table">
@@ -114,11 +181,16 @@ export default {
             masterList:[],
             showCurrentTableData: false,
             actClassModal:false,
+            addClassModal:false,
             loading: true,
             className:'',
             classid:'',
             managerid:'',
-            masterid:''
+            masterid:'',
+            remotelyClassid:'',
+            backClassname:'',
+            backClassno:'',
+            backCenterid:''
         }
     },
     methods: {
@@ -149,16 +221,12 @@ export default {
                     data[i].id=resData[i].id;
                     data[i].active=resData[i].active==true?"已激活":"否";
                 }
-                console.log(data);
+                // console.log(data);
                 this.classData=data;
             })
         },
-        //激活班级添加项目经理弹框
-        act(classid){
-            console.log(classid);
-            this.actClassModal=true;
-            //当前班级的id
-            this.classid=classid;
+        //加载各个弹框中的项目经理和班主任列表信息
+        init(){
             axios.get(
                 'userinfo/classactive',
                 {
@@ -166,24 +234,31 @@ export default {
                 }
             ).then((response)=>{
                 let resData=JSON.parse(response.data.data);
-                console.log(resData)
+                // console.log(resData)
                 this.masterList=JSON.parse(resData.master);
                 this.managerList=JSON.parse(resData.manager);
             })
         },
+        //激活班级添加项目经理弹框
+        act(classid){
+            // console.log(classid);
+            this.actClassModal=true;
+            //当前班级的id
+            this.classid=classid;
+        },
         //激活的时候选择项目经理
         managerChange(val){
-            console.log(val);
+            // console.log(val);
             this.managerid=val;
         },
         //激活的时候选择班主任
         masterChange(val){
-            console.log(val)
+            // console.log(val)
             this.masterid=val;
         },
         //确定激活新班级
         activeClass(){
-            console.log("确定激活了")
+            // console.log("确定激活了")
             let param = new URLSearchParams();
             param.append("classid",this.classid);
             param.append("managerid",this.managerid);
@@ -192,19 +267,19 @@ export default {
                 'userinfo/classactive',param,
                 {headers:{'Authorization':'JWT  '+Cookies.get('retoken')}}
             ).then((response)=>{
-                console.log(response.data);
+                // console.log(response.data);
                 if(response.data.result==true){
                     this.$Message.success('激活班级成功！');
                     this.getData();
                 }else{
-                    console.log(response.data.error)
+                    // console.log(response.data.error)
                     this.$Message.error('激活班级失败！'); 
                 }
             })
         },
         //停用当前班级
         deleteClass(index){
-            console.log(index)
+            // console.log(index)
             axios.delete(
                 'userinfo/classactive',
                 {
@@ -212,19 +287,67 @@ export default {
                     headers:{'Authorization':'JWT  '+Cookies.get('retoken')}
                 }
             ).then((response)=>{
-                console.log(response.data);
+                // console.log(response.data);
                 if(response.data.result==true){
                     this.$Message.success('该班级已停用！');
                     this.getData();
                 }else{
-                    console.log(response.data.error)
+                    // console.log(response.data.error)
                     this.$Message.error('停用班级失败！'); 
+                }
+            })
+        },
+        //弹出添加远程班级弹框
+        addClass(){
+            this.addClassModal=true;
+        },
+        //远程班级的主讲班选择
+        remotelyClassChange(val){
+            // console.log(val);
+            this.remotelyClassid=val;
+            axios.get(
+                'userinfo/ceclass',
+                {
+                    headers:{'Authorization':'JWT  '+Cookies.get('retoken')},
+                    params:{'classid':this.remotelyClassid}
+                }
+            ).then((response)=>{
+                console.log(response.data);
+                if(response.data.result==true){
+                    let data=response.data.data;
+                    this.backClassname=data.classname;
+                    this.backClassno=data.classno;
+                    this.backCenterid=data.centerid;
+                }else{
+
+                }
+            })
+        },
+        //确认添加远程班按钮
+        addClass_ok(){
+            let param = new URLSearchParams();
+            param.append("classid",this.remotelyClassid);
+            param.append("centerid",this.backCenterid);
+            param.append("classno",this.backClassno);
+            param.append("classname",this.backClassname);
+            axios.post(
+                'userinfo/ceclass',param,
+                {headers:{'Authorization':'JWT  '+Cookies.get('retoken')}}
+            ).then((response)=>{
+                console.log(response.data);
+                if(response.data.result==true){
+                    this.$Message.success('添加班级成功');
+                    this.getData();
+                }else{
+                    console.log(response.data.error)
+                    this.$Message.error('已存在该班级！'); 
                 }
             })
         }
     },
     created () {
         this.getData();
+        this.init();
     }
 }
 </script>
