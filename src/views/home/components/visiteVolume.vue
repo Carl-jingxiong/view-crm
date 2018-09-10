@@ -20,8 +20,8 @@ export default {
             {headers:{'Authorization':'JWT  '+Cookies.get('retoken')}}
         ).then((response)=>{
             let data=response.data.data;
-            console.log("条状数据图")
-            console.log(data);
+            // console.log("条状数据图")
+            // console.log(data);
             this.$nextTick(() => {
                 let visiteVolume = echarts.init(document.getElementById('visite_volume_con'));
                 let xAxisData = [];
