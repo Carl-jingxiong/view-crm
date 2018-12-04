@@ -23,8 +23,7 @@ const devServer = {
     // 代理
     proxy: {
       '/api': {
-        // target: 'http://172.164.1.68:8000/',
-        target: 'http://172.40.70.165:8000/',
+        target: 'http://192.168.3.252:8001/',
         changeOrigin: true,
         pathRewrite: {
           '^/api': '/'
